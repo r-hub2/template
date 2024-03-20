@@ -43,7 +43,7 @@ jobs:
 
     steps:
     # NO NEED TO CHECKOUT HERE
-    - uses: r-hub/rhub2/actions/rhub-setup@v1
+    - uses: r-hub/actions/setup@v1
       with:
         config: ${{ github.event.inputs.config }}
       id: rhub-setup
@@ -61,18 +61,18 @@ jobs:
       image: ${{ matrix.config.container }}
 
     steps:
-      - uses: r-hub/rhub2/actions/rhub-checkout@v1
+      - uses: r-hub/actions/checkout@v1
         with:
           ref: ${{ needs.update-repo.outputs.ref }}
-      - uses: r-hub/rhub2/actions/rhub-platform-info@v1
+      - uses: r-hub/actions/platform-info@v1
         with:
           token: ${{ secrets.RHUB_TOKEN }}
           job-config: ${{ matrix.config.job-config }}
-      - uses: r-hub/rhub2/actions/rhub-setup-deps@v1
+      - uses: r-hub/actions/setup-deps@v1
         with:
           token: ${{ secrets.RHUB_TOKEN }}
           job-config: ${{ matrix.config.job-config }}
-      - uses: r-hub/rhub2/actions/rhub-run-check@v1
+      - uses: r-hub/actions/run-check@v1
         with:
           token: ${{ secrets.RHUB_TOKEN }}
           job-config: ${{ matrix.config.job-config }}
@@ -89,22 +89,22 @@ jobs:
         config: ${{ fromJson(needs.setup.outputs.platforms) }}
 
     steps:
-      - uses: r-hub/rhub2/actions/rhub-checkout@v1
+      - uses: r-hub/actions/checkout@v1
         with:
           ref: ${{ needs.update-repo.outputs.ref }}
-      - uses: r-hub/rhub2/actions/rhub-setup-r@v1
+      - uses: r-hub/actions/setup-r@v1
         with:
           job-config: ${{ matrix.config.job-config }}
           token: ${{ secrets.RHUB_TOKEN }}
-      - uses: r-hub/rhub2/actions/rhub-platform-info@v1
+      - uses: r-hub/actions/platform-info@v1
         with:
           token: ${{ secrets.RHUB_TOKEN }}
           job-config: ${{ matrix.config.job-config }}
-      - uses: r-hub/rhub2/actions/rhub-setup-deps@v1
+      - uses: r-hub/actions/setup-deps@v1
         with:
           job-config: ${{ matrix.config.job-config }}
           token: ${{ secrets.RHUB_TOKEN }}
-      - uses: r-hub/rhub2/actions/rhub-run-check@v1
+      - uses: r-hub/actions/run-check@v1
         with:
           job-config: ${{ matrix.config.job-config }}
           token: ${{ secrets.RHUB_TOKEN }}
